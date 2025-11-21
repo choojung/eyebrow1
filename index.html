@@ -775,6 +775,45 @@
             .pc-gallery-grid { grid-template-columns: repeat(2, 1fr); }
         }
         */
+      /* --- [수정] 모바일 위생 섹션 PC 스타일화 --- */
+      #m-hygiene .m-scroll-container {
+        /* 가로 스크롤 제거하고 세로로 나열 */
+        display: grid;
+        grid-template-columns: 1fr; /* 한 줄에 1개씩 */
+        gap: 20px;
+        width: 100%;
+        margin: 0;
+        overflow: visible; /* 스크롤 끄기 */
+      }
+
+      #m-hygiene .m-card {
+        /* 기존 모바일 카드 스타일 덮어쓰기 */
+        width: 100%;
+        height: auto; /* 고정 높이 해제 (내용만큼 늘어남) */
+        margin-bottom: 0;
+        scroll-snap-align: none;
+
+        /* PC 카드 디자인 가져오기 */
+        padding: 40px 30px;
+        background: #fdfbf7;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        text-align: center;
+        box-shadow: none; /* 필요하면 추가 */
+      }
+
+      /* 텍스트 스타일 PC와 맞춤 */
+      #m-hygiene .m-card h3 {
+        font-size: 1.2rem;
+        margin: 15px 0 10px;
+        color: var(--text-main);
+      }
+      #m-hygiene .m-card p {
+        font-size: 0.95rem;
+        color: var(--text-sub);
+        word-break: keep-all; /* 단어 잘림 방지 */
+        line-height: 1.6;
+      }
     </style>
   </head>
   <body>
@@ -1162,30 +1201,42 @@
       <!-- 모바일 위생 섹션 -->
       <section id="m-hygiene" class="m-section">
         <div class="m-title">Hygiene Care <span>Clean & Safe</span></div>
+
         <div class="m-scroll-container">
           <div class="m-card">
             <i
               class="ph ph-shield-check"
-              style="font-size: 2rem; color: var(--accent-color)"
+              style="font-size: 3rem; color: var(--accent-color)"
             ></i>
-            <h3>1인 1기구</h3>
-            <p>철저한 멸균 소독</p>
+            <h3>멸균 소독 시스템</h3>
+            <p>
+              모든 도구는 의료용 고압 멸균기를 사용하여<br />
+              1인 1회 사용을 원칙으로 합니다.
+            </p>
           </div>
+
           <div class="m-card">
             <i
-              class="ph ph-drop"
-              style="font-size: 2rem; color: var(--accent-color)"
+              class="ph ph-eye"
+              style="font-size: 3rem; color: var(--accent-color)"
             ></i>
-            <h3>KC 인증</h3>
-            <p>검증된 정품 글루</p>
+            <h3>KC 인증 글루 사용</h3>
+            <p>
+              눈 시림이 적고 유지력이 강화된<br />
+              최고급 KC 인증 정품 글루만을 사용합니다.
+            </p>
           </div>
+
           <div class="m-card">
             <i
-              class="ph ph-bed"
-              style="font-size: 2rem; color: var(--accent-color)"
+              class="ph ph-armchair"
+              style="font-size: 3rem; color: var(--accent-color)"
             ></i>
-            <h3>래쉬 샴푸</h3>
-            <p>청결한 마무리</p>
+            <h3>프라이빗 케어</h3>
+            <p>
+              편안한 휴식을 위한 1인실 운영과<br />
+              시술 후 래쉬 샴푸 서비스를 제공합니다.
+            </p>
           </div>
         </div>
       </section>

@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 모바일 반응형 기본 세팅 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- TODO: 사이트 타이틀 & 메타 설명을 실제 샵 정보로 변경 -->
+    <title>LUMIERE | Premium Eyelash Design</title>
+    <meta
+      name="description"
+      content="강남구 테헤란로에 위치한 프리미엄 속눈썹 디자인 샵, 루미에르입니다. 1:1 맞춤 디자인과 철저한 위생 관리를 약속합니다."
+    />
+
+    <!-- 파비콘 (이모지 SVG 사용, 필요 시 교체) -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>"
+    />
+
+    <!-- 폰트 로딩 (헤드라인: Cormorant, 본문: Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 아이콘 (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+      /* =========================================
+           1. GLOBAL RESET & VARIABLES
+           - 전체 색상/폰트/공통 스타일 정의
+           ========================================= */
+      :root {
+        --bg-color: #f9f9f9;
+        --text-main: #1a1a1a;
+        --text-sub: #555555;
+        --accent-color: #b89e72;
+        --white: #ffffff;
+        --border-light: #e0e0e0;
+        --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Noto Sans KR", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .font-serif {
+        font-family: "Cormorant Garamond", serif;
+      }
+      .text-center {
+        text-align: center;
+      }
+
+      /* =========================================
+           2. RESPONSIVE DISPLAY LOGIC
+           - PC와 모바일 레이아웃 완전 분리
+           ========================================= */
+      .pc-wrapper {
+        display: block;
+      }
+      .mobile-wrapper {
+        display: none;
+      }
+
+      @media (max-width: 1023px) {
+        .pc-wrapper {
+          display: none;
+        }
+        .mobile-wrapper {
+          display: block;
+        }
+      }
+
+      /* =========================================
+           3. PC STYLES (.pc-wrapper)
+           ========================================= */
+      .pc-wrapper {
+        background-color: var(--white);
+      }
+      .pc-container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      /* 공통 섹션 타이틀 */
+      .pc-wrapper .section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 3.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-main);
+        opacity: 0;
+        transform: translateY(30px);
+        transition: var(--transition);
+      }
+      .pc-wrapper .section-desc {
+        font-size: 1.1rem;
+        color: var(--text-sub);
+        max-width: 600px;
+        margin: 0 auto 4rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: var(--transition);
+        transition-delay: 0.1s;
+      }
+      /* IntersectionObserver로 활성화되면 부드럽게 등장 */
+      .reveal.active,
+      .reveal.active .section-title,
+      .reveal.active .section-desc,
+      .reveal.active .content-box {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* PC 헤더 & GNB */
+      .pc-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pc-nav-container {
+        width: 1440px;
+        padding: 0 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      /* TODO: 로고 텍스트/이미지 변경 */
+      .pc-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+      .pc-gnb {
+        display: flex;
+        gap: 40px;
+      }
+      .pc-gnb a {
+        font-size: 1rem;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      .pc-gnb a:hover {
+        color: var(--accent-color);
+      }
+
+      .btn-reserve {
+        background-color: var(--text-main);
+        color: var(--white);
+        padding: 10px 24px;
+        border-radius: 2px;
+        font-size: 0.9rem;
+        transition: background 0.3s;
+      }
+      .btn-reserve:hover {
+        background-color: var(--accent-color);
+      }
+
+      /* PC 섹션 공통 패딩 */
+      .pc-section {
+        padding: 120px 0;
+        position: relative;
+      }
+
+      /* PC 히어로 섹션 (메인 비주얼) */
+      .pc-hero {
+        height: 100vh;
+        /* TODO: 메인 배경 이미지 변경 */
+        background: url("https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?q=80&w=1000&auto=format&fit=crop")
+          no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--white);
+      }
+      .pc-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .pc-hero-content {
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 1s ease-out forwards;
+      }
+      .pc-hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 5rem;
+        margin-bottom: 20px;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* PC 위생 섹션 카드 */
+      .pc-hygiene-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-top: 40px;
+      }
+      .pc-hygiene-card {
+        padding: 40px 30px;
+        background: #fdfbf7;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        text-align: center;
+        transition: var(--transition);
+      }
+      .pc-hygiene-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+      }
+      .pc-hygiene-card p {
+        font-size: 0.95rem;
+        color: var(--text-sub);
+      }
+      .pc-hygiene-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        border-color: var(--accent-color);
+      }
+
+      /* PC Before/After 슬라이더 */
+      .pc-ba-bg {
+        background-color: #f5f5f5;
+      }
+      .pc-ba-container {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        height: 600px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 4px;
+        cursor: col-resize;
+        border-radius: 12px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+      }
+      .pc-ba-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        user-select: none;
+      }
+      .pc-ba-before {
+        z-index: 2;
+        clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      }
+      .pc-ba-handle {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background-color: var(--white);
+        z-index: 10;
+        pointer-events: none;
+      }
+      .pc-ba-handle::after {
+        content: "◀ Drag ▶";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--white);
+        color: var(--text-main);
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      /* PC 갤러리 그리드 */
+      .pc-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .pc-gallery-item {
+        position: relative;
+        aspect-ratio: 3/4;
+        overflow: hidden;
+      }
+      .pc-gallery-item img {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        object-fit: cover;
+        transition: transform 0.6s;
+      }
+      .pc-gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 30px;
+        color: var(--white);
+        transition: 0.4s;
+      }
+      .pc-gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .pc-gallery-item:hover .pc-gallery-overlay {
+        opacity: 1;
+      }
+
+      /* PC 멤버십(가격표) 섹션 */
+      .pc-membership {
+        background-color: #1a1a1a;
+        color: var(--white);
+      }
+      .pc-price-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        align-items: center;
+      }
+      .pc-price-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 50px 40px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+        transition: 0.3s;
+      }
+      .pc-price-card .plan-name {
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        opacity: 0.9;
+      }
+      .pc-price-card .price {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+      .pc-price-card .price span {
+        font-size: 1rem;
+        margin-left: 4px;
+        opacity: 0.8;
+      }
+      .pc-price-card.featured {
+        background: var(--accent-color);
+        transform: scale(1.05);
+        border: none;
+        color: var(--text-main);
+      }
+      .pc-price-features li {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* PC Contact 섹션 (오시는 길 + 폼) */
+      .pc-contact-section {
+        display: flex;
+        height: 700px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: var(--transition);
+      }
+      .pc-contact-info {
+        flex: 1;
+        padding: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .pc-contact-map {
+        flex: 1;
+        background: #ddd;
+        position: relative;
+      }
+      .pc-form-input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+        font-size: 1rem;
+      }
+
+      /* PC 플로팅 SNS/상담 버튼 */
+      .pc-floating {
+        position: fixed;
+        right: 40px;
+        bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 900;
+      }
+      .pc-float-btn {
+        width: 50px;
+        height: 50px;
+        background: var(--white);
+        border-radius: 50%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: 0.3s;
+      }
+      .pc-float-btn:hover {
+        background: var(--text-main);
+        color: var(--white);
+        transform: scale(1.1);
+      }
+
+      /* =========================================
+           4. MOBILE STYLES (.mobile-wrapper)
+           - 모바일 전용 단일 페이지 구조
+           ========================================= */
+      .mobile-wrapper {
+        margin: 0 auto;
+        background: var(--white);
+        min-height: 100dvh;
+        padding-bottom: 90px; /* 하단 고정 바 높이만큼 여유 */
+        position: relative;
+      }
+
+      /* 모바일 상단 헤더 */
+      .m-header {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(5px);
+        z-index: 100;
+        border-bottom: 1px solid var(--border-light);
+      }
+      /* TODO: 모바일 로고 텍스트 변경 가능 */
+      .m-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      /* 모바일 드로어 메뉴 */
+      .m-drawer {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 200;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+      }
+      .m-drawer.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .m-drawer-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 80%;
+        height: 100%;
+        background: var(--white);
+        padding: 30px;
+        transform: translateX(100%);
+        transition: 0.3s ease-out;
+        display: flex;
+        flex-direction: column;
+      }
+      .m-drawer.active .m-drawer-content {
+        transform: translateX(0);
+      }
+      .m-drawer-nav a {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+
+      /* 모바일 히어로 */
+      .m-hero {
+        height: 60dvh;
+        /* TODO: 모바일 메인 배경 이미지 변경 */
+        background: url("https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?q=80&w=1000&auto=format&fit=crop")
+          no-repeat center/cover;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        padding: 30px 20px;
+      }
+      .m-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      }
+      .m-hero-text {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+      }
+      .m-hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.8rem;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      /* 모바일 퀵 내비 (갤러리/가격표/위생/위치) */
+      .m-quick-nav {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        padding: 20px;
+        border-bottom: 10px solid var(--bg-color);
+      }
+      .m-quick-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .m-quick-icon {
+        width: 50px;
+        height: 50px;
+        background: #f5f5f5;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--accent-color);
+      }
+      .m-quick-item span {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      /* 모바일 공통 섹션 */
+      .m-section {
+        padding: 40px 20px;
+        margin-bottom: 10px;
+      }
+      .m-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-family: "Cormorant Garamond", serif;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+      .m-title span {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 0.8rem;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+
+      /* 모바일 가로 스크롤 카드 grid system (1, 1fr)*/
+      .m-scroll-container {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
+        margin: 0 auto;
+        width: 350px;
+      }
+      .m-scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+      .m-card {
+        width: 100%;
+        height: 300px;
+        margin-bottom: 20px;
+        background: #fdfbf7;
+        /* padding: 20px; */
+        border-radius: 12px;
+        scroll-snap-align: start;
+        border: 1px solid rgba(184, 158, 114, 0.2);
+      }
+      .m-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+
+      /* 모바일 Before/After */
+      .m-ba-wrapper {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        touch-action: none;
+      }
+      .m-ba-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .m-ba-before {
+        z-index: 2;
+        clip-path: inset(0 50% 0 0);
+        will-change: clip-path;
+      }
+      .m-ba-divider {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 2px;
+        background: #fff;
+        z-index: 10;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .m-ba-knob {
+        width: 36px;
+        height: 36px;
+        background: var(--white);
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-color);
+      }
+
+      /* 모바일 멤버십 아코디언 */
+      .m-acc-item {
+        border-bottom: 1px solid var(--border-light);
+      }
+      .m-acc-header {
+        width: 100%;
+        padding: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+      }
+      .m-acc-header .ph-caret-down {
+        transition: transform 0.3s ease;
+      }
+      .m-acc-item.active .ph-caret-down {
+        transform: rotate(180deg);
+      }
+
+      .m-acc-content {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+      }
+      .m-acc-inner {
+        padding: 20px;
+        font-size: 0.9rem;
+        color: var(--text-sub);
+      }
+
+      /* 모바일 하단 고정 CTA 바 */
+      .m-sticky-bottom {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: var(--white);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 500;
+        gap: 10px;
+      }
+      .m-btn-sub {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+      }
+      .m-btn-main {
+        flex: 1;
+        height: 50px;
+        background: var(--accent-color);
+        color: var(--white);
+        border-radius: 25px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      /* (선택) 부드러운 스크롤 */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* (선택) 작은 PC 해상도에서 그리드 조정 예시
+        @media (max-width: 1280px) {
+            .pc-price-grid { grid-template-columns: repeat(2, 1fr); }
+            .pc-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 1100px) {
+            .pc-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        */
+    </style>
+  </head>
+  <body>
+    <!-- =========================================
+         PC WRAPPER (데스크톱 전용 레이아웃)
+         ========================================= -->
+    <div class="pc-wrapper">
+      <!-- PC 상단 고정 헤더 -->
+      <header class="pc-header">
+        <div class="pc-nav-container">
+          <!-- TODO: 로고 텍스트/이미지 교체 -->
+          <div class="pc-logo"><a href="#">LUMIERE</a></div>
+          <nav class="pc-gnb">
+            <!-- GNB는 섹션 ID와 연결 -->
+            <a href="#pc-about">About</a>
+            <a href="#pc-ba">Transformation</a>
+            <a href="#pc-gallery">Collection</a>
+            <a href="#pc-membership">Membership</a>
+            <a href="#pc-contact">Contact</a>
+          </nav>
+          <div class="header-actions">
+            <!-- TODO: 실제 네이버 예약 링크로 교체 -->
+            <button
+              class="btn-reserve"
+              onclick="window.open('https://booking.naver.com/booking/13/bizes/123456', '_blank')"
+              aria-label="네이버 예약 바로가기"
+            >
+              NAVER 예약하기
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- PC 메인 히어로 섹션 -->
+      <section class="pc-hero">
+        <div class="pc-hero-content">
+          <h1>Wake Up Beautiful</h1>
+          <p>
+            당신의 눈매에 숨겨진 우아함을 찾아드립니다.<br />1:1 맞춤형 아이래쉬
+            디자인 전문 살롱, 루미에르.
+          </p>
+        </div>
+      </section>
+
+      <!-- PC About / 위생 섹션 -->
+      <section id="pc-about" class="pc-section reveal">
+        <div class="pc-container">
+          <div class="text-center">
+            <h2 class="section-title">Hygiene & Care</h2>
+            <p class="section-desc">
+              안전하고 건강한 시술을 위해 타협하지 않는 위생 원칙을 지킵니다.
+            </p>
+          </div>
+          <div class="pc-hygiene-grid content-box">
+            <div class="pc-hygiene-card">
+              <i
+                class="ph ph-shield-check"
+                style="
+                  font-size: 3rem;
+                  color: var(--accent-color);
+                  margin-bottom: 20px;
+                "
+              ></i>
+              <h3>멸균 소독 시스템</h3>
+              <p>
+                모든 도구는 의료용 고압 멸균기를 사용하여<br />1인 1회 사용을
+                원칙으로 합니다.
+              </p>
+            </div>
+            <div class="pc-hygiene-card">
+              <i
+                class="ph ph-eye"
+                style="
+                  font-size: 3rem;
+                  color: var(--accent-color);
+                  margin-bottom: 20px;
+                "
+              ></i>
+              <h3>KC 인증 글루 사용</h3>
+              <p>
+                눈 시림이 적고 유지력이 강화된<br />최고급 KC 인증 정품 글루만을
+                사용합니다.
+              </p>
+            </div>
+            <div class="pc-hygiene-card">
+              <i
+                class="ph ph-armchair"
+                style="
+                  font-size: 3rem;
+                  color: var(--accent-color);
+                  margin-bottom: 20px;
+                "
+              ></i>
+              <h3>프라이빗 케어</h3>
+              <p>
+                편안한 휴식을 위한 1인실 운영과<br />시술 후 래쉬 샴푸 서비스를
+                제공합니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PC Before/After 섹션 -->
+      <section id="pc-ba" class="pc-section pc-ba-bg reveal">
+        <div class="pc-container">
+          <div class="text-center">
+            <h2 class="section-title">Dramatic Change</h2>
+            <p class="section-desc">
+              드래그하여 시술 전후의 디테일 차이를 확인해보세요.
+            </p>
+          </div>
+          <div class="pc-ba-container" id="pcBaSlider">
+            <!-- TODO: 시술 후/전 이미지 교체 -->
+            <img
+              src="image/af.jfif"
+              alt="속눈썹 시술 후 모습"
+              class="pc-ba-img"
+              loading="lazy"
+            />
+            <img
+              src="image/be.jfif"
+              alt="속눈썹 시술 전 모습"
+              class="pc-ba-img pc-ba-before"
+              id="pcBaBeforeImg"
+              loading="lazy"
+            />
+            <div class="pc-ba-handle" id="pcBaHandle"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PC 갤러리 섹션 -->
+      <section id="pc-gallery" class="pc-section reveal">
+        <div class="pc-container">
+          <div class="text-center">
+            <h2 class="section-title">Design Collection</h2>
+            <p class="section-desc">
+              루미에르만의 독보적인 디자인 갤러리입니다.
+            </p>
+          </div>
+          <div class="pc-gallery-grid content-box">
+            <!-- TODO: 각 갤러리 이미지를 실제 시술 사진으로 교체 -->
+            <div class="pc-gallery-item">
+              <img
+                src="https://i.pinimg.com/1200x/79/fe/cc/79fecce9ba23d82ee6f610a77b84bcb2.jpg"
+                alt="내추럴 볼륨 디자인"
+                loading="lazy"
+              />
+              <div class="pc-gallery-overlay"><h3>Natural Volume</h3></div>
+            </div>
+            <div class="pc-gallery-item">
+              <img
+                src="https://i.pinimg.com/1200x/fe/1a/2e/fe1a2e2dc4f4e0decbe2452d4e783de2.jpg"
+                alt="글래머러스 포인트 디자인"
+                loading="lazy"
+              />
+              <div class="pc-gallery-overlay"><h3>Glamorous Point</h3></div>
+            </div>
+            <div class="pc-gallery-item">
+              <img
+                src="https://i.pinimg.com/1200x/07/30/98/073098314f3921a493c80502879d46f1.jpg"
+                alt="퓨어 브라운 디자인"
+                loading="lazy"
+              />
+              <div class="pc-gallery-overlay"><h3>Pure Brown</h3></div>
+            </div>
+            <div class="pc-gallery-item">
+              <img
+                src="https://i.pinimg.com/1200x/d8/b4/2d/d8b42dec4defc919be59d329b463c655.jpg"
+                alt="웨딩 스페셜 디자인"
+                loading="lazy"
+              />
+              <div class="pc-gallery-overlay"><h3>Wedding Special</h3></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PC 멤버십/가격표 섹션 -->
+      <section id="pc-membership" class="pc-section pc-membership reveal">
+        <div class="pc-container">
+          <div class="text-center">
+            <h2 class="section-title">V.I.P Membership</h2>
+          </div>
+          <div class="pc-price-grid content-box">
+            <!-- TODO: 금액/혜택 변경 -->
+            <div class="pc-price-card">
+              <div class="plan-name">Silver</div>
+              <div class="price">20<span>만원</span></div>
+              <ul class="pc-price-features">
+                <li>22만원 적립</li>
+                <li>타샵 제거비 무료</li>
+              </ul>
+              <button
+                class="btn-reserve"
+                style="border: 1px solid #fff; margin-top: 20px"
+                aria-label="실버 멤버십 문의"
+              >
+                문의하기
+              </button>
+            </div>
+            <div class="pc-price-card featured">
+              <div class="plan-name">Gold</div>
+              <div class="price">30<span>만원</span></div>
+              <ul class="pc-price-features">
+                <li>35만원 적립</li>
+                <li>영양제 증정</li>
+                <li>가족 쉐어 가능</li>
+              </ul>
+              <button
+                class="btn-reserve"
+                style="
+                  background: #fff;
+                  color: var(--text-main);
+                  margin-top: 20px;
+                "
+                aria-label="골드 멤버십 신청"
+              >
+                신청하기
+              </button>
+            </div>
+            <div class="pc-price-card">
+              <div class="plan-name">Diamond</div>
+              <div class="price">50<span>만원</span></div>
+              <ul class="pc-price-features">
+                <li>60만원 적립</li>
+                <li>프리미엄 영양제</li>
+                <li>지인 무제한 쉐어</li>
+              </ul>
+              <button
+                class="btn-reserve"
+                style="border: 1px solid #fff; margin-top: 20px"
+                aria-label="다이아몬드 멤버십 문의"
+              >
+                문의하기
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PC Contact & 오시는 길 섹션 -->
+      <div id="pc-contact" class="pc-contact-section reveal">
+        <div class="pc-contact-info">
+          <h2 class="section-title">Contact & Visit</h2>
+          <!-- TODO: 실제 주소/운영시간으로 변경 -->
+          <p style="margin-bottom: 20px; font-size: 1.2rem">
+            서울시 강남구 테헤란로 123, 루미에르 타워 3F
+          </p>
+          <p style="margin-bottom: 30px; color: var(--text-sub)">
+            운영시간: 10:00 - 21:00 (매주 일요일 휴무)
+          </p>
+          <!-- TODO: 폼 처리(메일, DB) 연결 시 name/id 등 추가 -->
+          <input
+            type="text"
+            class="pc-form-input"
+            placeholder="성함"
+            aria-label="예약자 성함"
+          />
+          <input
+            type="tel"
+            class="pc-form-input"
+            placeholder="연락처"
+            aria-label="예약자 연락처"
+          />
+          <button
+            class="btn-reserve"
+            style="width: 100%"
+            aria-label="상담 신청 전송"
+          >
+            빠른 상담 신청
+          </button>
+        </div>
+        <div class="pc-contact-map">
+          <!-- TODO: 실제 지도(네이버/카카오) iframe으로 교체 가능 -->
+          <img
+            src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?q=80&w=1000&auto=format&fit=crop"
+            style="width: 100%; height: 100%; object-fit: cover"
+            alt="루미에르 타워 지도 위치"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <!-- PC 푸터 -->
+      <footer
+        style="
+          background: #111;
+          color: #666;
+          padding: 40px 0;
+          text-align: center;
+        "
+      >
+        <!-- TODO: 상호명/사업자 정보 등 추가 -->
+        &copy; 2025 LUMIERE Eyelash. All Rights Reserved.
+      </footer>
+
+      <!-- PC 플로팅 SNS 버튼 -->
+      <div class="pc-floating">
+        <!-- TODO: 실제 인스타그램 계정 URL로 교체 -->
+        <button
+          class="pc-float-btn"
+          aria-label="인스타그램 바로가기"
+          onclick="window.open('https://instagram.com/your_id', '_blank')"
+        >
+          <i class="ph ph-instagram-logo"></i>
+        </button>
+        <!-- TODO: 실제 카카오 채널/플친 URL로 교체 -->
+        <button
+          class="pc-float-btn"
+          aria-label="카카오톡 상담하기"
+          onclick="window.open('https://pf.kakao.com/_yourid', '_blank')"
+        >
+          <i class="ph ph-chat-circle-dots"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- =========================================
+         MOBILE WRAPPER (모바일 전용 레이아웃)
+         ========================================= -->
+    <div class="mobile-wrapper">
+      <!-- 모바일 상단 헤더 -->
+      <header class="m-header">
+        <!-- TODO: 로고 텍스트 변경 -->
+        <div class="m-logo">LUMIERE</div>
+        <button
+          class="btn-menu"
+          onclick="toggleMDrawer()"
+          aria-label="메뉴 열기"
+        >
+          <i class="ph ph-list" style="font-size: 1.8rem"></i>
+        </button>
+      </header>
+
+      <!-- 모바일 드로어 메뉴 -->
+      <div class="m-drawer" id="mDrawer">
+        <div class="m-drawer-content">
+          <button
+            style="align-self: flex-end; font-size: 1.8rem; margin-bottom: 40px"
+            onclick="toggleMDrawer()"
+            aria-label="메뉴 닫기"
+          >
+            <i class="ph ph-x"></i>
+          </button>
+          <nav class="m-drawer-nav">
+            <!-- 모바일 메뉴 → 아래 섹션 ID와 연결 -->
+            <a href="#m-gallery" onclick="toggleMDrawer()">갤러리</a>
+            <a href="#m-ba" onclick="toggleMDrawer()">시술 후기</a>
+            <a href="#m-membership" onclick="toggleMDrawer()">멤버십</a>
+            <a href="#m-contact" onclick="toggleMDrawer()">오시는 길</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- 모바일 히어로 -->
+      <section class="m-hero">
+        <div class="m-hero-text">
+          <h1>Wake Up<br />Beautiful</h1>
+          <p>루미에르만의 1:1 맞춤 아이래쉬</p>
+        </div>
+      </section>
+
+      <!-- 모바일 퀵 내비 -->
+      <nav class="m-quick-nav">
+        <a href="#m-gallery" class="m-quick-item">
+          <div class="m-quick-icon"><i class="ph ph-image"></i></div>
+          <span>갤러리</span>
+        </a>
+        <a href="#m-membership" class="m-quick-item">
+          <div class="m-quick-icon"><i class="ph ph-crown"></i></div>
+          <span>가격표</span>
+        </a>
+        <a href="#m-hygiene" class="m-quick-item">
+          <div class="m-quick-icon"><i class="ph ph-sparkle"></i></div>
+          <span>위생</span>
+        </a>
+        <a href="#m-contact" class="m-quick-item">
+          <div class="m-quick-icon"><i class="ph ph-map-pin"></i></div>
+          <span>위치</span>
+        </a>
+      </nav>
+
+      <!-- 모바일 위생 섹션 -->
+      <section id="m-hygiene" class="m-section">
+        <div class="m-title">Hygiene Care <span>Clean & Safe</span></div>
+        <div class="m-scroll-container">
+          <div class="m-card">
+            <i
+              class="ph ph-shield-check"
+              style="font-size: 2rem; color: var(--accent-color)"
+            ></i>
+            <h3>1인 1기구</h3>
+            <p>철저한 멸균 소독</p>
+          </div>
+          <div class="m-card">
+            <i
+              class="ph ph-drop"
+              style="font-size: 2rem; color: var(--accent-color)"
+            ></i>
+            <h3>KC 인증</h3>
+            <p>검증된 정품 글루</p>
+          </div>
+          <div class="m-card">
+            <i
+              class="ph ph-bed"
+              style="font-size: 2rem; color: var(--accent-color)"
+            ></i>
+            <h3>래쉬 샴푸</h3>
+            <p>청결한 마무리</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 모바일 Before/After -->
+      <section id="m-ba" class="m-section">
+        <div class="m-title">Change <span>Touch & Drag</span></div>
+        <div class="m-ba-wrapper" id="mSlider">
+          <!-- TODO: 모바일 시술 전/후 이미지 변경 -->
+          <div
+            class="m-ba-img m-ba-before"
+            id="mBeforeLayer"
+            style="background: url('images/before.jpg') no-repeat center/cover"
+            role="img"
+            aria-label="시술 전"
+          ></div>
+          <img
+            src="images/after.jpg"
+            class="m-ba-img"
+            alt="시술 후"
+            loading="lazy"
+          />
+          <div class="m-ba-divider" id="mDivider">
+            <div class="m-ba-knob"><i class="ph ph-arrows-left-right"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 모바일 갤러리 -->
+      <section id="m-gallery" class="m-section">
+        <div class="m-title">Gallery <span>Design Pick</span></div>
+        <div class="m-scroll-container">
+          <!-- TODO: 실제 시술 사진으로 교체 -->
+          <div class="m-card" style="padding: 0; overflow: hidden">
+            <img
+              src="https://i.pinimg.com/1200x/fe/1a/2e/fe1a2e2dc4f4e0decbe2452d4e783de2.jpg"
+              alt="디자인 샘플 1"
+              style="height: 100%; object-fit: cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="m-card" style="padding: 0; overflow: hidden">
+            <img
+              src="https://i.pinimg.com/1200x/07/30/98/073098314f3921a493c80502879d46f1.jpg"
+              alt="디자인 샘플 2"
+              style="height: 100%; object-fit: cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="m-card" style="padding: 0; overflow: hidden">
+            <img
+              src="https://i.pinimg.com/1200x/d8/b4/2d/d8b42dec4defc919be59d329b463c655.jpg"
+              alt="디자인 샘플 3"
+              style="height: 100%; object-fit: cover"
+              loading="lazy"
+            />
+          </div>
+          <div class="m-card" style="padding: 0; overflow: hidden">
+            <img
+              src="https://i.pinimg.com/1200x/79/fe/cc/79fecce9ba23d82ee6f610a77b84bcb2.jpg"
+              alt="디자인 샘플 4"
+              style="height: 100%; object-fit: cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- 모바일 멤버십 아코디언 -->
+      <section id="m-membership" class="m-section">
+        <div class="m-title">Membership <span>Benefits</span></div>
+        <div class="m-accordion">
+          <!-- TODO: 금액/내용 변경 -->
+          <div class="m-acc-item">
+            <button
+              class="m-acc-header"
+              aria-expanded="false"
+              aria-label="실버 멤버십 상세 보기"
+            >
+              <span style="font-weight: 600">Silver</span>
+              <span style="color: var(--accent-color); font-weight: 700"
+                >20만원 <i class="ph ph-caret-down"></i
+              ></span>
+            </button>
+            <div class="m-acc-content">
+              <div class="m-acc-inner">22만원 적립 / 타샵 제거 무료</div>
+            </div>
+          </div>
+          <div class="m-acc-item">
+            <button
+              class="m-acc-header"
+              aria-expanded="false"
+              aria-label="골드 멤버십 상세 보기"
+            >
+              <span style="font-weight: 600">Gold (Best)</span>
+              <span style="color: var(--accent-color); font-weight: 700"
+                >30만원 <i class="ph ph-caret-down"></i
+              ></span>
+            </button>
+            <div class="m-acc-content">
+              <div class="m-acc-inner">
+                35만원 적립 / 영양제 증정 / 가족 쉐어
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 모바일 오시는 길 -->
+      <section id="m-contact" class="m-section">
+        <div class="m-title">Visit <span>Location</span></div>
+        <div
+          style="
+            background: #eee;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+          "
+        >
+          <!-- TODO: 지도 이미지 또는 실제 지도 iframe으로 교체 -->
+          <img
+            src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?q=80&w=600&auto=format&fit=crop"
+            style="width: 100%; height: 100%; object-fit: cover"
+            alt="강남 루미에르 약도"
+            loading="lazy"
+          />
+        </div>
+        <!-- TODO: 실제 주소/운영시간으로 변경 -->
+        <p
+          style="
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 600;
+          "
+        >
+          서울 강남구 테헤란로 123, 3층
+        </p>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px">
+          운영시간: 10:00 - 21:00
+        </p>
+        <!-- TODO: SMS 연결 번호 실제 번호로 변경 -->
+        <button
+          class="m-btn-main"
+          style="width: 100%; background: #222; margin-bottom: 20px"
+          onclick="location.href='sms:010-1234-5678'"
+          aria-label="문자로 상담하기"
+        >
+          빠른 문자 상담
+        </button>
+      </section>
+
+      <!-- 모바일 하단 고정 CTA 바 -->
+      <nav class="m-sticky-bottom">
+        <!-- TODO: 실제 전화번호 변경 -->
+        <button
+          class="m-btn-sub"
+          onclick="location.href='tel:010-1234-5678'"
+          aria-label="전화 걸기"
+        >
+          <i class="ph ph-phone"></i>
+        </button>
+        <!-- (선택) Web Share API 연결 가능 -->
+        <button class="m-btn-sub" aria-label="페이지 공유하기">
+          <i class="ph ph-share-network"></i>
+        </button>
+        <!-- TODO: 실제 네이버 예약 링크로 변경 -->
+        <button
+          class="m-btn-main"
+          onclick="window.open('https://booking.naver.com/booking/13/bizes/123456', '_blank')"
+          aria-label="네이버 예약 페이지 열기"
+        >
+          <i class="ph ph-calendar-check"></i> N 예약하기
+        </button>
+      </nav>
+    </div>
+
+    <script>
+      // DOM 준비되면 실행
+      document.addEventListener("DOMContentLoaded", () => {
+        /* --- 1. PC SECTION REVEAL ANIMATION --- */
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) entry.target.classList.add("active");
+            });
+          },
+          { threshold: 0.15 }
+        );
+        document
+          .querySelectorAll(".reveal")
+          .forEach((s) => observer.observe(s));
+
+        /* --- 2. PC Before/After 슬라이더 --- */
+        const pcSlider = document.getElementById("pcBaSlider");
+        const pcBeforeImg = document.getElementById("pcBaBeforeImg");
+        const pcHandle = document.getElementById("pcBaHandle");
+
+        if (pcSlider) {
+          // 슬라이더 위치 업데이트 함수
+          const updatePcSlider = (clientX) => {
+            const rect = pcSlider.getBoundingClientRect();
+            let pos = ((clientX - rect.left) / rect.width) * 100;
+            if (pos < 0) pos = 0;
+            if (pos > 100) pos = 100;
+            pcBeforeImg.style.clipPath = `polygon(0 0, ${pos}% 0, ${pos}% 100%, 0 100%)`;
+            pcHandle.style.left = `${pos}%`;
+          };
+
+          // 마우스 드래그
+          pcSlider.addEventListener("mousemove", (e) =>
+            updatePcSlider(e.clientX)
+          );
+          // 터치(터치 노트북/태블릿)
+          pcSlider.addEventListener(
+            "touchmove",
+            (e) => updatePcSlider(e.touches[0].clientX),
+            { passive: true }
+          );
+        }
+
+        /* --- 3. MOBILE Before/After 슬라이더 --- */
+        const mSlider = document.getElementById("mSlider");
+        const mBeforeLayer = document.getElementById("mBeforeLayer");
+        const mDivider = document.getElementById("mDivider");
+
+        if (mSlider) {
+          const updateMobileSlider = (x) => {
+            const rect = mSlider.getBoundingClientRect();
+            let p = ((x - rect.left) / rect.width) * 100;
+            if (p < 0) p = 0;
+            if (p > 100) p = 100;
+            mBeforeLayer.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
+            mDivider.style.left = `${p}%`;
+          };
+
+          // 터치 시작 지점도 바로 반응
+          mSlider.addEventListener(
+            "touchstart",
+            (e) => {
+              updateMobileSlider(e.touches[0].clientX);
+            },
+            { passive: true }
+          );
+
+          // 터치 이동
+          mSlider.addEventListener(
+            "touchmove",
+            (e) => {
+              updateMobileSlider(e.touches[0].clientX);
+            },
+            { passive: true }
+          );
+
+          // 마우스 드래그(데스크톱에서도 사용 가능)
+          mSlider.addEventListener("mousedown", (e) => {
+            const move = (ev) => updateMobileSlider(ev.clientX);
+            const up = () => {
+              window.removeEventListener("mousemove", move);
+              window.removeEventListener("mouseup", up);
+            };
+            window.addEventListener("mousemove", move);
+            window.addEventListener("mouseup", up);
+            updateMobileSlider(e.clientX);
+          });
+        }
+
+        /* --- 4. MOBILE 멤버십 아코디언 --- */
+        document.querySelectorAll(".m-acc-header").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const item = btn.parentElement;
+            const content = btn.nextElementSibling;
+            const isExpanded = item.classList.contains("active");
+
+            // 접근성 속성 업데이트
+            btn.setAttribute("aria-expanded", !isExpanded);
+            item.classList.toggle("active");
+
+            // 열릴 때는 내용 높이만큼 부드럽게 펼치기
+            if (item.classList.contains("active")) {
+              content.style.height = content.scrollHeight + "px";
+            } else {
+              content.style.height = "0";
+            }
+          });
+        });
+
+        /* --- 5. (선택) 모바일 Web Share API 연결 예시 ---
+            const shareBtn = document.querySelector('.m-btn-sub[aria-label="페이지 공유하기"]');
+            if (shareBtn && navigator.share) {
+                shareBtn.addEventListener('click', () => {
+                    navigator.share({
+                        title: 'LUMIERE Eyelash',
+                        text: '강남 루미에르 속눈썹 디자인 샵',
+                        url: window.location.href
+                    }).catch(() => {});
+                });
+            }
+            */
+      });
+
+      /* --- 모바일 드로어 메뉴 토글 함수 --- */
+      function toggleMDrawer() {
+        const drawer = document.getElementById("mDrawer");
+        if (drawer) drawer.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>
